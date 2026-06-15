@@ -1,3 +1,35 @@
+const btnRock = document.querySelector('.rock')
+const btnPaper = document.querySelector('.paper')
+const btnScissor = document.querySelector('.scissors')
+const btnReset = document.querySelector('.reset')
+const divResult = document.querySelector('#result')
+const scorePlayer = document.querySelector('.scoreplayer')  
+const scoreComputer = document.querySelector('.scorecomputer')
+
+btnRock.addEventListener('click', () =>{
+    const resultado = playRound('rock', getComputerChoice());
+    divResult.innerHTML = resultado;
+    winner();
+    
+})
+btnPaper.addEventListener('click', () =>{
+    const resultado = playRound('paper', getComputerChoice());
+    divResult.innerHTML = resultado;
+    winner();
+    
+})
+btnScissor.addEventListener('click', () =>{
+    const resultado = playRound('scissors', getComputerChoice());
+    divResult.innerHTML = resultado;
+    winner();
+    
+})
+btnReset.addEventListener('click', () =>{
+    
+    Resetear()
+})
+
+
 function getComputerChoice() {
     const choice = ["rock", "paper", "scissors"];
     const randomIndex = Math.floor(Math.random() * choice.length);
@@ -5,22 +37,9 @@ function getComputerChoice() {
 }
 //console.log(getComputerChoice());
 
-function getHumanChoice() {
-    const choice = prompt("Please enter rock, paper, or scissors:");
-    if (choice === null) {
-        return null;
-    }
-    const lowerCaseChoice = choice.toLowerCase();
-    if (lowerCaseChoice === "rock" || lowerCaseChoice === "paper" || lowerCaseChoice === "scissors") {
-        return lowerCaseChoice;
-    } else {
-        alert ("Invalid choice. Please enter rock, paper, or scissors.");
-        return getHumanChoice();
-    }
-}
-//console.log(getHumanChoice());
 let humanScore = 0;
 let computerScore = 0;
+
 
 function playRound(humanChoice, computerChoice) {
     if (humanChoice === computerChoice) {
@@ -30,29 +49,36 @@ function playRound(humanChoice, computerChoice) {
         humanChoice === "paper" && computerChoice === "rock" ||
         humanChoice === "scissors" && computerChoice === "paper") {
         humanScore++;
-        return "You win this round!";
+        scorePlayer.textContent = humanScore;
+        return `You win this round! your score is ${humanScore}`;
     } else {
         computerScore++;
-        return "Computer wins this round!";
+        scoreComputer.textContent = computerScore;
+        return `Computer wins this round! his score is ${computerScore}`;
     }
 }
 
-function playGame() {
-    while (humanScore < 5 && computerScore < 5) {
-        const humanChoice = getHumanChoice();
-        if (humanChoice === null) {
-            alert("Game cancelled.");
-            return;
-        }
-        const computerChoice = getComputerChoice();
-        const result = playRound(humanChoice, computerChoice);
-        alert(result);
-        alert(`Current Score - You: ${humanScore}, Computer: ${computerScore}`);
-    }
-    if (humanScore === 5) {
-        alert("Congratulations! You won the game!");
-    } else {
-        alert("Sorry, the computer won the game.");
+function winner(){
+    if(humanScore === 5){
+        divResult.innerHTML = `you are a win ${humanScore}`;
+        btnRock.disabled = true;
+        btnPaper.disabled = true;
+        btnScissor.disabled = true;
+    }else if(computerScore === 5){
+        divResult.innerHTML = `Computer is a win ${computerScore}`;
+        btnRock.disabled = true;
+        btnPaper.disabled = true;
+        btnScissor.disabled = true;
     }
 }
-playGame();
+
+function Resetear(){
+        humanScore = 0;
+        computerScore = 0;
+        btnRock.disabled = false;
+        btnPaper.disabled = false;
+        btnScissor.disabled = false;
+        divResult.textContent = "";
+        scorePlayer.textContent = "0";
+        scoreComputer.textContent = "0";
+}
