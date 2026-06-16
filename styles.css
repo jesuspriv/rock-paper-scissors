@@ -49,5 +49,17 @@ body{
   box-shadow: 0 0 15px #00e5ff, 0 0 30px #00e5ff, 0 0 60px #00e5ff;
 }
 #result{
-    min-height: 50px;
+    margin-top: 20px;
+}
+p{
+    color: white;
+}
+span{
+    color: cyan;
+}
+footer{
+    position: fixed;
+    bottom: 10px;
+    left: 10px;
+    color: rgb(160, 172, 172);
 }
